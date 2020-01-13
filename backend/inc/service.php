@@ -197,12 +197,13 @@ class HuhtamakiCupprint{
             $result=$estimate->save($_REQUEST['reference']);
             ?>
            <!-- thank you page -->
-  			<h1><?php _('Thank You');?></h1>
+  			<h1><?php _('Thank you for Your Request!');?></h1>
   			<div><?php echo $this->getMessageTemplateHtml('en','thank-you-page.txt');?></div>
   			<div>
   				<?php $this->renderEstimateTable($result); ?>
   				<?php $this->renderContactDetails($result); ?>
   			</div>
+  			<div><?php echo $this->getMessageTemplateHtml('en','thank-you-bottom.txt');?></div>
  
             
             <?php 
