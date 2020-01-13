@@ -59,8 +59,8 @@ function processRequestForm(){
 			return false;
 		}
 		// business unit
-		if( !$('#businessUnit').val() ) {
-			showWarning($('#businessUnit'));
+		if( !$('#businessUnitID').val() ) {
+			showWarning($('#businessUnitID'));
 			return false;
 		}
 		// at least one selection 8oz / 12oz
@@ -104,14 +104,29 @@ function renderEstimate($estimate){
 		console.log($result);
 		
 		$('.estimateResult').html($result);
-		
+		// bind to the button click 'send request'
+		$('#sendRequest').click(function(event){
+			event.preventDefault();
+			saveEstimate();
+		});
 		
 	}, 'html');
-	
-	
-	
-	
 }
+
+function saveEstimate(){
+	$settings=$('#sendRequest').data();
+	console.log($settings);
+	$url='backend/index.php';
+	$data = {
+				'key' : $settings['key'],
+				'reference' : $settings['reference']
+	};
+	$.get($url,$data,function($result){
+		console.log($result);
+		$('.lhscolumn').html($result);
+	}, 'html');
+}
+
 
 
 function showWarning($cause){

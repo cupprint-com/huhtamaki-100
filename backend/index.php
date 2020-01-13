@@ -52,6 +52,10 @@ switch ($operationToExecute){
         $service->renderEstimate();
         die();
         break;
+    case SAVE_ESTIMATE: # saves estimate (to table that is monitored by zapier) and renders a thank you page
+        $service->renderThankYouPage();
+        die();
+        break;
 }
 
 

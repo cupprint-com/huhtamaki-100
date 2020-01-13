@@ -26,7 +26,7 @@ define('H100_DEBUG',$debugging);
  * 
 
 
-wsGcTtTJXfckrK5C
+
 ayn6daWB8xFDEmPT
 */
 
@@ -36,11 +36,13 @@ define('RENDER_FORM',40000);
 define('RENDER_BU',40002);
 define('CALCULATE_ESTIMATE',40010);
 define('GET_ESTIMATE',40011);
+define('SAVE_ESTIMATE',40012);
 
 
 define('KEY_RENDER_FORM','UnCp2kE8sqkY4MW4');
 define('KEY_CALCULATE_ESTIMATE','gzMSmqCmET7CYvxE');
 define('KEY_GET_ESTIMATE','cs3NGXzpmrrtGAE4');
+define('KEY_SAVE_ESTIMATE','wsGcTtTJXfckrK5C');
 
 define('CPC8DW_PRICE',0.8);
 define('CPC12DW_PRICE',0.9);

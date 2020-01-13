@@ -61,6 +61,46 @@ class Estimate{
         return $result;
     }
     
+    public function save($reference){
+        $db=new Database();
+        $conn=$db->getConnection();
+        
+        
+        $sql="call spSaveHuhtamaki100(:quoteReference);";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':quoteReference',$reference,PDO::PARAM_STR);
+        $stmt->execute();
+        $stmt->closeCursor();
+        return $this->get($reference);
+    }
+    
+    
+    
+    public function getBusinessUnits(){
+        $results=[];
+        $db=new Database();
+        $conn=$db->getConnection();
+        $sql="select id, location from buLocations order by location asc";
+        $stmt = $conn->prepare($sql,array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+        if ($stmt->execute()) {
+            $rows=$stmt->fetchAll(PDO::FETCH_ASSOC);
+            foreach( $rows as $row ) {
+                
+                $field=[];
+                $field['id']=$row['id'];
+                $field['location']=$row['location'];
+                
+                $results[]=$field;
+            }
+        }
+        $stmt->closeCursor();
+        return $results;
+    }
+    /**
+     * Performs an update to the wipHuh100Quotes record that stores current state of the options selected by end user
+     * @param unknown $data
+     * @return unknown
+     */
     private function updateWipEstimate($data){
         $db=new Database();
         $conn=$db->getConnection();
@@ -77,6 +117,7 @@ class Estimate{
         }
         
         $sql="UPDATE wipHuh100Quotes SET ";
+        $sql.= 'businessUnitID=:businessUnitID, ' ;
         $sql.= 'email=:email, ' ;
         $sql.= 'cpc8dwName=:cpc8dwName,' ;
         $sql.= 'cpc8dwQuantity=:cpc8dwQuantity,' ;
@@ -102,6 +143,7 @@ class Estimate{
         $sql.=' WHERE quoteReference=:quoteReference ';
         
         $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':businessUnitID',$data['businessUnitID'],PDO::PARAM_INT);
         $stmt->bindValue(':email',$data['emailAddress'],PDO::PARAM_STR);
         $stmt->bindValue(':cpc8dwName',$data['cpc8dwName'],PDO::PARAM_STR);
         $stmt->bindValue(':cpc8dwQuantity',$data['cpc8dwQuantity'],PDO::PARAM_STR);
@@ -118,6 +160,18 @@ class Estimate{
         $stmt->bindValue(':estimatedTotal',$data['estimatedTotal'],PDO::PARAM_STR);
         $stmt->bindValue(':quoteReference',$data['quoteReference'],PDO::PARAM_STR);
         
+        $stmt->execute();
+        $stmt->closeCursor();
+        #update address details
+        $sql='UPDATE wipHuh100Quotes INNER JOIN buLocations on wipHuh100Quotes.businessUnitID=buLocations.id  SET ';
+        $sql.= 'wipHuh100Quotes.address1 = buLocations.address1, ';
+        $sql.= 'wipHuh100Quotes.address2 = buLocations.address2, ';
+        $sql.= 'wipHuh100Quotes.address3 = buLocations.address3, ';
+        $sql.= 'wipHuh100Quotes.zip = buLocations.zip, ';
+        $sql.= 'wipHuh100Quotes.country = buLocations.country ';
+        $sql.= ' WHERE wipHuh100Quotes.quoteReference=:quoteReference '; 
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':quoteReference',$data['quoteReference'],PDO::PARAM_STR);
         $stmt->execute();
         $stmt->closeCursor();
         return $this->getWipEstimate($data['quoteReference']);

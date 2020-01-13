@@ -23,13 +23,12 @@ class HuhtamakiCupprint{
 	  				<input type="email" name="emailAddress" id="emailAddress" data-warning="Please enter a valid email address"/>
 	  			</p>
 	  			<p>
-  					<label for="businessUnit" id="businessUnitLabel">Business unit:</label>
-	  				<select name="businessUnit" id="businessUnit" data-warning="Please select your business unit">
+  					<label for="businessUnitID" id="businessUnitLabel">Business unit:</label>
+	  				<select name="businessUnitID" id="businessUnitID" data-warning="Please select your business unit">
 	  						<option value="">please select your business unit</option>
-  							<option value="placeholder1">placeholder 1</option>
-  							<option value="placeholder2">placeholder 2</option>
-  							<option value="placeholder3">placeholder 3</option>
-  							<option value="placeholder4">placeholder 4</option>
+	  						<?php $this->renderBusinessUnitOptions();?>
+  							
+  							
   					</select>
 	  			</p>
   				<p>
@@ -61,6 +60,18 @@ class HuhtamakiCupprint{
         
     }
     
+    private function renderBusinessUnitOptions(){
+        $estimate=new Estimate();
+        $results=$estimate->getBusinessUnits();
+        foreach($results as $row ) {
+            ?>
+            <option value="<?php echo $row['id']; ?>"><?php echo $row['location']; ?></option>
+            <?php 
+            
+        }
+        
+        
+    }
     
     public function processFormSubmission(){
         $result=[];
@@ -83,25 +94,39 @@ class HuhtamakiCupprint{
     }
     
     public function renderEstimate(){
-        $data=$_REQUEST;
+        
         
         if (array_key_exists('reference', $_REQUEST)){
             $estimate=new Estimate();
             $result=$estimate->get($_REQUEST['reference']);
-            
-            $nameRowHeader= _('Item');
-            $quantityRowHeader= _('Quantity');
-            $priceRowHeader= _('Cost');
-            $freightRowHeader= _('Estimated Shipping');
-            $subtotalRowHeader= _('Price');
-            $cpc8dwName= _('Huhtamaki 100 8oz Double Wall');
-            
-            $subTotalPriceHeader=_('Price');
-            $subTotalShippingHeader=_('Shipping');
-            $subTotalHeader=_('Total');
-            ?>
+             ?>
             <div class="wrapEstimate" id="estimate">
-            	<table>
+ 				<?php $this->renderEstimateTable($result); ?>
+            		<div><button type="button" id="sendRequest" data-reference="<?php echo($result['quoteReference'])?>" data-key="<?php  echo KEY_SAVE_ESTIMATE?>"><?php echo _('send request');?></button></div>
+            </div>
+            
+            
+            <?php 
+        
+        
+        }
+        
+    }
+    
+    private function renderEstimateTable($result){
+        $nameRowHeader= _('Item');
+        $quantityRowHeader= _('Quantity');
+        $priceRowHeader= _('Cost');
+        $freightRowHeader= _('Estimated Shipping');
+        $subtotalRowHeader= _('Price');
+        $cpc8dwName= _('Huhtamaki 100 8oz Double Wall');
+        $cpc12dwName= _('Huhtamaki 100 12oz Double Wall');
+        
+        $subTotalPriceHeader=_('Price');
+        $subTotalShippingHeader=_('Shipping');
+        $subTotalHeader=_('Total');
+        ?>
+                   	<table>
             		<tr>
             			<th class="estimateItemName"><?php echo($nameRowHeader);?></th>
             			<th class="estimateItemQuantity"><?php echo($quantityRowHeader);?></th>
@@ -118,8 +143,15 @@ class HuhtamakiCupprint{
             			<td><?php  echo($result['cpc8dwTotal']); ?></td>
             		</tr>
             		<tr>
+            			<td><?php  echo($cpc12dwName); ?></td>
+            			<td><?php  echo($result['cpc12dwQuantity']); ?></td>
+            			<td><?php  echo($result['cpc12dwPrice']); ?></td>
+            			<td><?php  echo($result['cpc12dwFreight']); ?></td>
+            			<td><?php  echo($result['cpc12dwTotal']); ?></td>
+            		</tr>
+            		<tr>
             			<td colspan="5">
-            				<table>
+            			<table>
             					<tr>
             						<th><?php echo($subTotalPriceHeader);?></th>
             						<td><?php  echo($result['estimatedPrice']); ?></td>
@@ -132,21 +164,84 @@ class HuhtamakiCupprint{
             						<th><?php echo($subTotalHeader);?></th>
             						<td><?php  echo($result['estimatedTotal']); ?></td>
             					</tr>
+            					
             				</table>
-            			</td>
+              			</td>
             			
             		</tr>
             		
             	</table>
-            
-            </div>
-            
+        <?php 
+    }
+    
+    
+    public function renderThankYouPage(){
+        if (array_key_exists('reference', $_REQUEST)){
+            # save the estimate (adds new row to 'huhtamaki100' table using stored procedure)
+            $estimate=new Estimate();
+            $result=$estimate->save($_REQUEST['reference']);
+            ?>
+           <!-- thank you page -->
+  			<h1>Thank You</h1>
+  			<div>Thanks for your request, our sales team will prepare a formal quotation for you and send it to you via email using the details below .</div>
+  			<div>
+  				<?php $this->renderEstimateTable($result); ?>
+  				<?php $this->renderContactDetails($result); ?>
+  			</div>
+ 
             
             <?php 
-        
-        
+            
+            
         }
         
+    }
+    
+    private function renderContactDetails($result){
+        ?>
+        <div class="wrapBuContact">
+        	<table>
+        		<tr>
+        			<th><?php echo _('Quotation Reference');?></th>
+        			<td><?php echo $result['quoteReference'];?></td>
+        		</tr>
+        		<tr>
+        			<th><?php echo _('Business Unit');?></th>
+        			<td><?php echo $result['businessUnitID'];?></td>
+        		</tr>
+        		<tr>
+        			<th><?php echo _('Email Address');?></th>
+        			<td><?php echo $result['email'];?></td>
+        		</tr>
+        		<tr>
+        			<th><?php echo _('Address');?></th>
+        			<td><?php echo $this->normalizeAddress($result);   ?></td>
+        		</tr>
+        		
+        	</table>
+        
+        </div>
+        <?php 
+    }
+    
+    private function normalizeAddress($result){
+        $address='';
+        if ($result['address1']!=''){
+            $address.=$result['address1'] . '<br/>';
+        }
+        if ($result['address2']!=''){
+            $address.=$result['address2'] . '<br/>';
+        }
+        if ($result['address3']!=''){
+            $address.=$result['address3'] . '<br/>';
+        }
+        if ($result['zip']!=''){
+            $address.=$result['zip'] . '<br/>';
+        }
+        if ($result['country']!=''){
+            $address.=$result['country'] . '<br/>';
+        }
+        return $address;
     }
     
     private function validateFormSubmission($form=[]){
@@ -165,7 +260,7 @@ class HuhtamakiCupprint{
         # TODO we will need to limit email address domains (@cupprint.com / @huhtamaki.com / @other ?)
         
         # business unit
-        if (!array_key_exists('businessUnit', $form)){
+        if (!array_key_exists('businessUnitID', $form)){
             $result['message']='Please select your business unit';
             return $result;
         }
@@ -188,7 +283,7 @@ class HuhtamakiCupprint{
         $result['message']='';
         
         $result['emailAddress']=$form['emailAddress'];
-        $result['businessUnit']=$form['businessUnit'];
+        $result['businessUnitID']=$form['businessUnitID'];
         $result['cpc8dwQuantity']=$cpc8dwQuantity;
         $result['cpc12dwQuantity']=$cpc12dwQuantity;
         $result['cpc8dwName']='8oz Double Wall';
@@ -206,6 +301,7 @@ class HuhtamakiCupprint{
         $result[KEY_RENDER_FORM]=RENDER_FORM;
         $result[KEY_CALCULATE_ESTIMATE]=CALCULATE_ESTIMATE;
         $result[KEY_GET_ESTIMATE]=GET_ESTIMATE;
+        $result[KEY_SAVE_ESTIMATE]=SAVE_ESTIMATE;
         return $result;
         
         

@@ -65,9 +65,19 @@
 	width:10%;	
 }
 
+.wrapEstimate td table{
+	width:100%;
+	
+}
+.wrapEstimate td table th{
+	text-align:right;
 
-
-
+}
+.wrapEstimate button{
+	background-color: #357CFF;
+	color:#ffffff;
+	padding: 4px;
+}
 
 .wrapMenu{
 	margin: 24px 4px;
