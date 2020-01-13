@@ -13,18 +13,18 @@ class HuhtamakiCupprint{
     public function renderFormHtml(){
         ?>
         <!-- begin default view (html) of preamble and form -->
-  			<h1>Welcome to Huhtamaki 100</h1>
-  			<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sollicitudin tortor eget mattis pellentesque. Donec euismod egestas luctus. Suspendisse in tincidunt tellus, a elementum justo. Donec quis pharetra nisl. Sed pharetra imperdiet nulla non pretium. Curabitur at justo eget tellus lobortis dictum. Quisque elementum, arcu sit amet maximus pharetra, libero justo rhoncus elit, non mollis velit tellus vel tortor. Morbi lacinia pellentesque tortor, sed dictum orci auctor ac. Aenean quis metus sed est molestie ornare. Donec vel vulputate nunc. Quisque dictum, dui at mattis dapibus, mi lectus accumsan orci, a cursus ex sapien fringilla tortor. Integer ex erat, accumsan eu vulputate at, lobortis vitae libero. Mauris rhoncus sed elit ut elementum. Integer elementum commodo nibh. Nulla sed felis odio. Phasellus rhoncus egestas ante, eleifend accumsan leo vestibulum nec. Pellentesque id congue eros. Sed efficitur malesuada imperdiet. Donec vulputate turpis vulputate tincidunt tincidunt. Etiam et purus magna. Sed finibus maximus augue, ut consectetur dolor finibus ut. Suspendisse ut augue neque.</div>
+  			<h1><?php echo _('Welcome to Huhtamaki 100');?></h1>
+  			<div><?php echo $this->getMessageTemplateHtml('en','home-page-narrative.txt');?></div>
   			<div>
   				<form id="requestForm" action="#" method="post">
   				<input type="hidden" name="key" value="<?php echo KEY_CALCULATE_ESTIMATE;?>">
   				<p>
   					<label for="emailAddress" id="emailLabel">Your email address:</label>
-	  				<input type="email" name="emailAddress" id="emailAddress" data-warning="Please enter a valid email address"/>
+	  				<input type="email" name="emailAddress" id="emailAddress" data-warning="<?php echo _('Please enter a valid email address');?>"/>
 	  			</p>
 	  			<p>
   					<label for="businessUnitID" id="businessUnitLabel">Business unit:</label>
-	  				<select name="businessUnitID" id="businessUnitID" data-warning="Please select your business unit">
+	  				<select name="businessUnitID" id="businessUnitID" data-warning="<?php echo _('Please select your business unit');?>">
 	  						<option value="">please select your business unit</option>
 	  						<?php $this->renderBusinessUnitOptions();?>
   							
@@ -33,20 +33,34 @@ class HuhtamakiCupprint{
 	  			</p>
   				<p>
   					<label for="cpc8dwQuantity" id="CPC8DWLabel">8oz Double Wall:</label>
-	  				<select name="cpc8dwQuantity" id="cpc8dwQuantity" data-warning="Please select at least one quantity">
+	  				<select name="cpc8dwQuantity" id="cpc8dwQuantity" data-warning="<?php echo _('Please select at least one quantity');?>">
   							<option value="0">how many 8 oz cups</option>
   							<option value="500">500</option>
   							<option value="1000">1000</option>
   							<option value="1500">1500</option>
+  							<option value="2000">2000</option>
+  							<option value="2500">2500</option>
+  							<option value="3000">3000</option>
+  							<option value="3500">3500</option>
+  							<option value="4000">4000</option>
+  							<option value="4500">4500</option>
+  							<option value="5000">5000</option>
   					</select>
 	  			</p>
 	  			<p>
   					<label for="cpc12dwQuantity" id="CPC12DWLabel">12oz Double Wall:</label>
-	  				<select name="cpc12dwQuantity" id="cpc12dwQuantity" data-warning="Please select at least one quantity">
+	  				<select name="cpc12dwQuantity" id="cpc12dwQuantity" data-warning="<?php echo _('Please select at least one quantity');?>">
   							<option value="0">how many 12 oz cups</option>
   							<option value="500">500</option>
   							<option value="1000">1000</option>
   							<option value="1500">1500</option>
+  							<option value="2000">2000</option>
+  							<option value="2500">2500</option>
+  							<option value="3000">3000</option>
+  							<option value="3500">3500</option>
+  							<option value="4000">4000</option>
+  							<option value="4500">4500</option>
+  							<option value="5000">5000</option>
   					</select>
 	  			</p>
 	  			<p id="calculate">
@@ -55,6 +69,7 @@ class HuhtamakiCupprint{
 	  			</p>
   				</form>
   				<div class="estimateResult"></div>
+  				<div><?php echo $this->getMessageTemplateHtml('en','below-form-narrative.txt');?></div>
   			</div>
         <?php         
         
@@ -182,8 +197,8 @@ class HuhtamakiCupprint{
             $result=$estimate->save($_REQUEST['reference']);
             ?>
            <!-- thank you page -->
-  			<h1>Thank You</h1>
-  			<div>Thanks for your request, our sales team will prepare a formal quotation for you and send it to you via email using the details below .</div>
+  			<h1><?php _('Thank You');?></h1>
+  			<div><?php echo $this->getMessageTemplateHtml('en','thank-you-page.txt');?></div>
   			<div>
   				<?php $this->renderEstimateTable($result); ?>
   				<?php $this->renderContactDetails($result); ?>
@@ -223,6 +238,22 @@ class HuhtamakiCupprint{
         </div>
         <?php 
     }
+    
+    /**
+     * Retrieve the html content of the correct auto quote template for target language & territory
+     * @param string $language
+     * @param string $territory
+     * @return string
+     */
+    private function getMessageTemplateHtml($language='en', $filename='home-page-narrative.txt'){
+        
+        $path=getcwd() . '/templates/' . $language . '/';
+        #echo $path . $filename;
+        $result = file_get_contents($path . $filename);
+        return $result;
+        
+    }
+    
     
     private function normalizeAddress($result){
         $address='';
