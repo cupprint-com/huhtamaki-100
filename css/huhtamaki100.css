@@ -1,6 +1,36 @@
+html, body, td, p, a, h1, h2, h3, h4, h5 {
+	font-family: Lato,Arial,Helvetica,sans-serif;
+}
+html, body, td, p, a {
+	font-size: 15px;
+}
+
+.textright{
+	text-align: right;
+}
+.textleft{
+	text-align: left;
+}
+
+
+th, td {
+	padding-left: 10px;
+}
+td {
+	padding-top: 6px;
+	padding-bottom: 6px;
+}
+th:first-child,
+td:first-child {
+	padding-left: 0;
+}
+
 .row{
+	box-sizing: border-box;
 	display:block;
-	width:98%;
+	width:100%;
+	padding-left: 3%;
+	padding-right: 3%;
 }
 .masthead{
 	display:block;

@@ -102,7 +102,7 @@ class HuhtamakiCupprint{
              ?>
             <div class="wrapEstimate" id="estimate">
  				<?php $this->renderEstimateTable($result); ?>
-            		<div><button type="button" id="sendRequest" data-reference="<?php echo($result['quoteReference'])?>" data-key="<?php  echo KEY_SAVE_ESTIMATE?>"><?php echo _('send request');?></button></div>
+                <div class="form-group"><button type="button" id="sendRequest" class="submit" data-reference="<?php echo($result['quoteReference'])?>" data-key="<?php  echo KEY_SAVE_ESTIMATE?>"><?php echo _('send request');?></button></div>
             </div>
             
             
