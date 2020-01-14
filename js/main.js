@@ -142,6 +142,11 @@ function saveEstimate(){
 	$.get($url,$data,function($result){
 		console.log($result);
 		$('.lhscolumn').html($result);
+		
+		$([document.documentElement, document.body]).animate({
+			scrollTop: $("body").offset().top
+		}, 2000);
+
 	}, 'html');
 }
 
