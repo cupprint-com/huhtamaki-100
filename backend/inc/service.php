@@ -7,9 +7,6 @@ require_once   getcwd() . '/config/includes.php';
 require_once   getcwd() . '/inc/estimate.php';
 class HuhtamakiCupprint{
     
-    
-    
-    
     public function renderFormHtml(){
         ?>
         <!-- begin default view (html) of preamble and form -->
@@ -22,22 +19,20 @@ class HuhtamakiCupprint{
 
                     <input type="hidden" name="key" value="<?php echo KEY_CALCULATE_ESTIMATE;?>">
                     <div class="form-group">
-                        <label for="emailAddress" id="emailLabel">Your email address:</label>
+                        <label for="emailAddress" id="emailLabel"><?php echo _('Your email address'); ?>:</label>
                         <input type="email" name="emailAddress" id="emailAddress" data-warning="<?php echo _('Please enter a valid email address');?>"/>
                     </div>
                     <div class="form-group">
-                        <label for="businessUnitID" id="businessUnitLabel">Business unit:</label>
+                        <label for="businessUnitID" id="businessUnitLabel"><?php echo _('Business Unit');?>:</label>
                         <select name="businessUnitID" id="businessUnitID" data-warning="<?php echo _('Please select your business unit');?>">
-                                <option value="">please select your business unit</option>
-                                <?php $this->renderBusinessUnitOptions();?>
-                                
-                                
+                            <option value=""><?php echo _('Please select your business unit'); ?></option>
+                            <?php $this->renderBusinessUnitOptions();?>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="cpc8dwQuantity" id="CPC8DWLabel">8oz Double Wall:</label>
+                        <label for="cpc8dwQuantity" id="CPC8DWLabel"><?php echo _('8oz Double Wall'); ?>:</label>
                         <select name="cpc8dwQuantity" id="cpc8dwQuantity" data-warning="<?php echo _('Please select at least one quantity');?>">
-                            <option value="0">how many 8 oz cups</option>
+                            <option value="0"><?php echo _('How many 8 oz cups'); ?></option>
                             <option value="500">500</option>
   							<option value="1000">1000</option>
   							<option value="1500">1500</option>
@@ -51,9 +46,9 @@ class HuhtamakiCupprint{
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="cpc12dwQuantity" id="CPC12DWLabel">12oz Double Wall:</label>
+                        <label for="cpc12dwQuantity" id="CPC12DWLabel"><?php echo _('12oz Double Wall'); ?>:</label>
                         <select name="cpc12dwQuantity" id="cpc12dwQuantity" data-warning="<?php echo _('Please select at least one quantity');?>">
-                            <option value="0">how many 12 oz cups</option>
+                            <option value="0"><?php echo _('How many 12 oz cups'); ?></option>
                             <option value="500">500</option>
   							<option value="1000">1000</option>
   							<option value="1500">1500</option>
@@ -85,10 +80,7 @@ class HuhtamakiCupprint{
             ?>
             <option value="<?php echo $row['id']; ?>"><?php echo $row['location']; ?></option>
             <?php 
-            
         }
-        
-        
     }
     
     public function processFormSubmission(){
@@ -107,13 +99,9 @@ class HuhtamakiCupprint{
         $result['key']=KEY_GET_ESTIMATE;
         $result['errors']=0;
         return $result;
-        
-        
     }
     
     public function renderEstimate(){
-        
-        
         if (array_key_exists('reference', $_REQUEST)){
             $estimate=new Estimate();
             $result=$estimate->get($_REQUEST['reference']);
@@ -122,13 +110,8 @@ class HuhtamakiCupprint{
  				<?php $this->renderEstimateTable($result); ?>
                 <div class="form-group"><button type="button" id="sendRequest" class="submit" data-reference="<?php echo($result['quoteReference'])?>" data-key="<?php  echo KEY_SAVE_ESTIMATE?>"><?php echo _('send request');?></button></div>
             </div>
-            
-            
             <?php 
-        
-        
         }
-        
     }
     
     private function renderEstimateTable($result){
@@ -144,6 +127,7 @@ class HuhtamakiCupprint{
         $subTotalShippingHeader=_('Shipping');
         $subTotalHeader=_('Estimate');
         ?>
+            <h2><?php echo _("Your Request:"); ?></h2>
             <table cellspacing="0" cellpadding="0" class="textright">
                 <tr>
                     <th class="estimateItemName textleft"><?php echo($nameRowHeader);?></th>
@@ -166,13 +150,14 @@ class HuhtamakiCupprint{
                         <table cellspacing="0" cellpadding="0">
                             <tr>
                                 <th><?php echo($subTotalHeader);?></th>
-                                <td>&euro; <?php  echo number_format($result['estimatedTotal'],2); ?></td>
+                                <td><b>&euro; <?php  echo number_format($result['estimatedTotal'],2); ?></b></td>
                             </tr>
                         </table>
                     </td>
                 </tr>
                 
             </table>
+            <p>&nbsp;</p>
         <?php 
     }
     
@@ -183,19 +168,19 @@ class HuhtamakiCupprint{
             $estimate=new Estimate();
             $result=$estimate->save($_REQUEST['reference']);
             ?>
-           <!-- thank you page -->
-  			<h1><?php echo _("Thank you for Your Request!");?></h1>
-  			<div><?php echo $this->getMessageTemplateHtml('en','thank-you-page.txt');?></div>
-  			<div>
-  				<?php $this->renderEstimateTable($result); ?>
-  				<?php $this->renderContactDetails($result); ?>
-  			</div>
-  			<div><?php echo $this->getMessageTemplateHtml('en','thank-you-bottom.txt');?></div>
- 
-            
-            <?php
+            <!-- thank you page -->
+            <div class="thank-you-page">
+                <h1><?php echo _('Thank you for Your Request!');?></h1>
+                <div><?php echo $this->getMessageTemplateHtml('en','thank-you-page.txt');?></div>
+                <div>
+                    <?php $this->renderEstimateTable($result); ?>
+                    <?php $this->renderContactDetails($result); ?>
+                </div>
+                <div><?php echo $this->getMessageTemplateHtml('en','thank-you-bottom.txt');?></div>
+            </div>
+            <input type="hidden" id="sendRequest" class="submit" data-reference="<?php echo($_REQUEST['reference'])?>" data-key="<?php echo KEY_SAVE_ESTIMATE; ?>"></button>
+            <?php 
         }
-        
     }
     
     private function renderContactDetails($result){
@@ -218,9 +203,7 @@ class HuhtamakiCupprint{
         			<th><?php echo _('Address');?></th>
         			<td><?php echo $this->normalizeAddress($result);   ?></td>
         		</tr>
-        		
         	</table>
-        
         </div>
         <?php 
     }
@@ -263,13 +246,13 @@ class HuhtamakiCupprint{
     
     private function validateFormSubmission($form=[]){
         $result=[];
-        $result['errors']=1;
-        $result['message']='Something went wrong !';
+        $result['errors'] = 1;
+        $result['message'] =  _('Something went wrong !');
         $cpc8dwQuantity=0;
         $cpc12dwQuantity=0;
         # verify that email address posted
         if (!array_key_exists('emailAddress', $form)){
-            $result['message']='Please enter a valid email address';
+            $result['message']= _('Please enter a valid email address');
             return $result;
         }
         # verify the email address format
@@ -278,13 +261,13 @@ class HuhtamakiCupprint{
         
         # business unit
         if (!array_key_exists('businessUnitID', $form)){
-            $result['message']='Please select your business unit';
+            $result['message']= _('Please select your business unit');
             return $result;
         }
         
         # 8ozdw / 12ozdw
         if ((!array_key_exists('cpc8dwQuantity', $form)) && (!array_key_exists('cpc12dwQuantity', $form))){
-            $result['message']='Please select at least one quantity';
+            $result['message']=_('Please select at least one quantity');
             return $result;
         }
         if (array_key_exists('cpc8dwQuantity', $form)){
@@ -303,8 +286,8 @@ class HuhtamakiCupprint{
         $result['businessUnitID']=$form['businessUnitID'];
         $result['cpc8dwQuantity']=$cpc8dwQuantity;
         $result['cpc12dwQuantity']=$cpc12dwQuantity;
-        $result['cpc8dwName']='8oz Double Wall';
-        $result['cpc12dwName']='12oz Double Wall';
+        $result['cpc8dwName'] = _('8oz Double Wall');
+        $result['cpc12dwName'] = _('12oz Double Wall');
         
         return $result;
     }
@@ -320,9 +303,5 @@ class HuhtamakiCupprint{
         $result[KEY_GET_ESTIMATE]=GET_ESTIMATE;
         $result[KEY_SAVE_ESTIMATE]=SAVE_ESTIMATE;
         return $result;
-        
-        
     }
-    
 }
-
