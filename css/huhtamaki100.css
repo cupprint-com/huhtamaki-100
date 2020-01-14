@@ -5,6 +5,12 @@ html, body, td, p, a {
 	font-size: 15px;
 }
 
+footer{
+    min-height: 32px;
+    margin-top: 60px;
+	background: #ecf0f5;
+}
+
 .textright{
 	text-align: right;
 }
@@ -41,11 +47,16 @@ td:first-child {
 }
 .topbar{
 	display:block;
-	height:12px;
-	padding-left: 2%;
-	padding-right: 2%;
+	padding: 7px 2% 8px;
 	background-color: #ec0085;
-	color:#ffffff;
+	color:#fff;
+	font-weight: 600;
+	font-size: 90%;
+}
+.topbar a,
+.topbar a:link{
+	color: #fff;
+	font-size: 90%;
 }
 .lhscolumn{
 	box-sizing: border-box;

@@ -144,26 +144,20 @@ class HuhtamakiCupprint{
         $subTotalShippingHeader=_('Shipping');
         $subTotalHeader=_('Estimate');
         ?>
-            <table cellspacing="0" cellpadding="0">
+            <table cellspacing="0" cellpadding="0" class="textright">
                 <tr>
                     <th class="estimateItemName textleft"><?php echo($nameRowHeader);?></th>
                     <th class="estimateItemQuantity"><?php echo($quantityRowHeader);?></th>
-                    <th class="estimateItemPrice"><?php echo($priceRowHeader);?></th>
-                    <th class="estimateItemFreight"><?php echo($freightRowHeader);?></th>
                     <th class="estimateItemTotal"><?php echo($subtotalRowHeader);?></th>
                 </tr>
                 <tr>
                     <td class="textleft"><?php  echo($cpc8dwName); ?></td>
                     <td><?php  echo($result['cpc8dwQuantity']); ?></td>
-                    <td><?php  echo number_format($result['cpc8dwPrice'],2); ?></td>
-                    <td><?php  echo number_format($result['cpc8dwFreight'],2); ?></td>
                     <td><?php  echo number_format($result['cpc8dwTotal'],2); ?></td>
                 </tr>
                 <tr>
                     <td class="textleft"><?php echo($cpc12dwName); ?></td>
                     <td><?php  echo($result['cpc12dwQuantity']); ?></td>
-                    <td><?php  echo number_format($result['cpc12dwPrice'],2); ?></td>
-                    <td><?php  echo number_format($result['cpc12dwFreight'],2); ?></td>
                     <td><?php  echo number_format($result['cpc12dwTotal'],2); ?></td>
                 </tr>
                 <tr>
@@ -171,16 +165,8 @@ class HuhtamakiCupprint{
                     <td colspan="4" class="priceblock textright">
                         <table cellspacing="0" cellpadding="0">
                             <tr>
-                                <th><?php echo($subTotalPriceHeader);?></th>
-                                <td><?php  echo number_format($result['estimatedPrice'],2); ?></td>
-                            </tr>
-                            <tr>
-                                <th><?php echo($subTotalShippingHeader);?></th>
-                                <td><?php  echo number_format($result['estimatedFreight'],2); ?></td>
-                            </tr>
-                            <tr>
                                 <th><?php echo($subTotalHeader);?></th>
-                                <td><?php  echo number_format   ($result['estimatedTotal'],2); ?></td>
+                                <td>&euro; <?php  echo number_format($result['estimatedTotal'],2); ?></td>
                             </tr>
                         </table>
                     </td>
