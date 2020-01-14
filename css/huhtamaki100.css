@@ -34,23 +34,34 @@ td:first-child {
 }
 .masthead{
 	display:block;
-	height: 160px;
+	height: 38px;
+	padding-left: 2%;
+	padding-right: 2%;
+    margin: 3% 0 2%;
 }
 .topbar{
 	display:block;
-	height:24px;
+	height:12px;
+	padding-left: 2%;
+	padding-right: 2%;
 	background-color: #ec0085;
 	color:#ffffff;
 }
 .lhscolumn{
+	box-sizing: border-box;
 	width:60%;
 	float:left;
 	
 	height:100%;
+	padding-left: 2%;
+	padding-right: 2%;
 }
 .rhscolumn{
+	box-sizing: border-box;
 	width:40%;
 	float:right;
+	padding-left: 2%;
+	padding-right: 2%;
 }
 /* Clear floats after the columns */
 .row:after {
@@ -65,13 +76,23 @@ td:first-child {
 
 .wrapDesignCanvas{
 	display:block;
-	width: 500px;
-	height: 600px;
+	position: relative;
+	width: 100%;
+	height: 1;
+	height: 0;
+	padding-top: 120%;
 	background: transparent !important;
 	margin: 0 auto;
 	overflow: hidden; /** not sure if we need this */ 
 }
 
+.wrapDesignCanvas canvas{
+	position: absolute;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	right: 0;
+}
 /** 3d rendering area */	
 #DesignCanvas {
     	width   : 100%;
