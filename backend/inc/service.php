@@ -184,7 +184,7 @@ class HuhtamakiCupprint{
             $result=$estimate->save($_REQUEST['reference']);
             ?>
            <!-- thank you page -->
-  			<h1><?php _('Thank you for Your Request!');?></h1>
+  			<h1><?php echo _("Thank you for Your Request!");?></h1>
   			<div><?php echo $this->getMessageTemplateHtml('en','thank-you-page.txt');?></div>
   			<div>
   				<?php $this->renderEstimateTable($result); ?>
@@ -193,9 +193,7 @@ class HuhtamakiCupprint{
   			<div><?php echo $this->getMessageTemplateHtml('en','thank-you-bottom.txt');?></div>
  
             
-            <?php 
-            
-            
+            <?php
         }
         
     }
