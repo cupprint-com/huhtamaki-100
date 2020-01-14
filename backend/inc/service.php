@@ -13,7 +13,7 @@ class HuhtamakiCupprint{
     public function renderFormHtml(){
         ?>
         <!-- begin default view (html) of preamble and form -->
-  			<h1><?php echo _('Huhtamaki 100 Celebration Cup Orders');?></h1>
+  			<h1><?php echo _('Welcome - Huhtamaki 100 Celebration Cup Orders');?></h1>
   			<div><?php echo $this->getMessageTemplateHtml('en','home-page-narrative.txt');?></div>
   			<div>
   				<form id="requestForm" action="#" method="post">
@@ -142,7 +142,7 @@ class HuhtamakiCupprint{
         
         $subTotalPriceHeader=_('Price');
         $subTotalShippingHeader=_('Shipping');
-        $subTotalHeader=_('Total');
+        $subTotalHeader=_('Estimate');
         ?>
             <table cellspacing="0" cellpadding="0">
                 <tr>
