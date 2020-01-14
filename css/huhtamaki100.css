@@ -4,6 +4,13 @@ html, body, td, p, a, h1, h2, h3, h4, h5 {
 html, body, td, p, a {
 	font-size: 15px;
 }
+a:link {
+	color: #000;
+}
+a:hover ,
+a:visited {
+	color: #333;
+}
 
 footer{
     min-height: 32px;
