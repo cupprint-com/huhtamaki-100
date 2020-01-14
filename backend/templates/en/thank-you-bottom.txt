@@ -1,1 +1,13 @@
-CupPrint specialise in short run, fast turnaround, customised paper cup printing. <br/><br/>A service that was previously only available to large volume buyers. Headquartered at their primary manufacturing operation in Ireland, CupPrint also have a production facility in The United States and a sales office in Germany and employ over 180 people. The CupPrint range includes the first and only cup that's designed to be recycled in regular waste processing plants. In 2018 this product was awarded 'Triple A' certification by the Institute cyclos-HTP in conjunction with the European Green Dot scheme. CupPrints offering allows smaller businesses, such as those with limited storage space, to present their brand on bespoke paper cups and to demonstrate their commitment to sustainable values via their alternative coatings range and PEFC accreditation. Short-run customised cups are also attractive to event organisers, for in-house brand use or promotional merchandise resellers.
+<ul>
+    <li><strong><a href="https://cupprint.com/gallery/">LOOK FOR DESIGN INSPIRATION</a></strong></li>
+    <li><strong><a href="https://cupprint.com/printed-paper-coffee-cup-printing-faqs/">FAQs</a></strong></li>
+    <li><strong><a href="https://cupprint.com/custom-printed-paper-coffee-cup-design-tips/">PAPER CUP DESIGN TIPS</a></strong></li>
+</ul>
+
+<h2>About CupPrint</h2>
+
+<p><i>CupPrint specialise in short run, fast turnaround, customised paper cup printing. A service that was previously only available to large volume buyers.</i></p>
+<p>Headquartered at their primary manufacturing operation in Ireland, CupPrint also have a production facility in The United States and a sales office in Germany and employ over 180 people.</p>
+<p>The CupPrint range includes the <b>first and only cup that's designed to be recycled in regular waste processing plants</b>. In 2018 this product was awarded '<b>Triple A</b>' certification by the Institute cyclos-HTP in conjunction with the European Green Dot scheme.</p>
+<p>CupPrint’s offering allows smaller businesses, such as those with limited storage space, to present their brand on bespoke paper cups and to demonstrate their commitment to sustainable values via their alternative coatings range and PEFC accreditation.</p>
+<p>Short-run customised cups are also attractive to event organisers, for in-house brand use or promotional merchandise resellers.</p>
