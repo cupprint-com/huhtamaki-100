@@ -64,6 +64,7 @@ td:first-child {
 	padding-right: 2%;
 }
 /* Clear floats after the columns */
+form:after ,
 .row:after {
   content: "";
   display: table;
@@ -93,6 +94,65 @@ td:first-child {
 	bottom: 0;
 	right: 0;
 }
+
+/** Form */	
+.form-group{
+	box-sizing: border-box;
+	float: left;
+	position: relative;
+	width: 100%;
+	padding-left: 260px;
+	margin: 1% 0;
+	font-size: 110%;
+}
+.form-group:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.form-group label{
+	position: absolute;
+	top:13px;
+	left:0;
+	width: 240px;
+	float: left;
+	display: block;
+}
+.form-group input,
+.form-group select{
+	border: 1px solid #c0c0c0;
+	width: 100%;
+	padding: 12px 3%;
+}
+.form-group input{
+	width: 94%;
+}
+.form-group select{
+	width: 100%;
+}
+.form-group .submit ,
+.form-group input[type=submit] {
+	float: right;
+	width: 50%;
+}
+
+#formWarnings {
+	
+}
+#formWarnings ul {
+	background: #fffde8;
+	border: 2px solid #ffe600;
+	padding-top: 6px;
+	padding-bottom: 6px;
+}
+
+/** pricebox */	
+.priceblock table{
+	width: 100%;
+	border-top: 1px solid #000;
+}
+
 /** 3d rendering area */	
 #DesignCanvas {
     	width   : 100%;
@@ -125,9 +185,11 @@ td:first-child {
 
 }
 .wrapEstimate button{
+	width: 100%;
 	background-color: #357CFF;
+    padding: 12px 3%;
+    border: 1px solid #3336ff;
 	color:#ffffff;
-	padding: 4px;
 }
 
 .wrapMenu{
