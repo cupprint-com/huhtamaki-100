@@ -58,7 +58,11 @@ function processRequestForm(){
 			warrnings.push( showWarning($('#emailAddress')) );
 			// return false;
 		}
-		if (!isEmail($('#emailAddress').val())){
+		else if (!isEmail($('#emailAddress').val())){
+			warrnings.push( showWarning($('#emailAddress')) );
+			// return false;
+		}
+		else if (!$('#emailAddress').val().match(/@(cupprint\.com|huhtamaki\.com)$/g) ){
 			warrnings.push( showWarning($('#emailAddress')) );
 			// return false;
 		}
