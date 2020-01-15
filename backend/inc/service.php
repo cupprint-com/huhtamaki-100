@@ -277,7 +277,12 @@ class HuhtamakiCupprint{
         }
         # verify the email address format
         
-        # TODO we will need to limit email address domains (@cupprint.com / @huhtamaki.com / @other ?)
+        # verify that email domain posted
+        if( array_key_exists('emailAddress', $form) 
+         && !preg_match("/@(cupprint\.com|huhtamaki\.com)$/i", "PHP ist die Web-Scripting-Sprache der Wahl.")) {
+            $result['message']='Please enter a valid email domain';
+            return $result;
+        }
         
         # business unit
         if (!array_key_exists('businessUnitID', $form)){
