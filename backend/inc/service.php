@@ -13,29 +13,32 @@ class HuhtamakiCupprint{
     public function renderFormHtml(){
         ?>
         <!-- begin default view (html) of preamble and form -->
-  			<h1><?php echo _('Huhtamaki 100 Celebration Cup Orders');?></h1>
+  			<h1><?php echo _('Welcome - Huhtamaki 100 Celebration Cup Orders');?></h1>
   			<div><?php echo $this->getMessageTemplateHtml('en','home-page-narrative.txt');?></div>
   			<div>
   				<form id="requestForm" action="#" method="post">
-  				<input type="hidden" name="key" value="<?php echo KEY_CALCULATE_ESTIMATE;?>">
-  				<p>
-  					<label for="emailAddress" id="emailLabel">Your email address:</label>
-	  				<input type="email" name="emailAddress" id="emailAddress" data-warning="<?php echo _('Please enter a valid email address');?>"/>
-	  			</p>
-	  			<p>
-  					<label for="businessUnitID" id="businessUnitLabel">Business unit:</label>
-	  				<select name="businessUnitID" id="businessUnitID" data-warning="<?php echo _('Please select your business unit');?>">
-	  						<option value="">please select your business unit</option>
-	  						<?php $this->renderBusinessUnitOptions();?>
-  							
-  							
-  					</select>
-	  			</p>
-  				<p>
-  					<label for="cpc8dwQuantity" id="CPC8DWLabel">8oz Double Wall:</label>
-	  				<select name="cpc8dwQuantity" id="cpc8dwQuantity" data-warning="<?php echo _('Please select at least one quantity');?>">
-  							<option value="0">how many 8 oz cups</option>
-  							<option value="500">500</option>
+
+                  <div id="formWarnings"></div>
+
+                    <input type="hidden" name="key" value="<?php echo KEY_CALCULATE_ESTIMATE;?>">
+                    <div class="form-group">
+                        <label for="emailAddress" id="emailLabel">Your email address:</label>
+                        <input type="email" name="emailAddress" id="emailAddress" data-warning="<?php echo _('Please enter a valid email address');?>"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="businessUnitID" id="businessUnitLabel">Business unit:</label>
+                        <select name="businessUnitID" id="businessUnitID" data-warning="<?php echo _('Please select your business unit');?>">
+                                <option value="">please select your business unit</option>
+                                <?php $this->renderBusinessUnitOptions();?>
+                                
+                                
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="cpc8dwQuantity" id="CPC8DWLabel">8oz Double Wall:</label>
+                        <select name="cpc8dwQuantity" id="cpc8dwQuantity" data-warning="<?php echo _('Please select at least one quantity');?>">
+                            <option value="0">how many 8 oz cups</option>
+                            <option value="500">500</option>
   							<option value="1000">1000</option>
   							<option value="1500">1500</option>
   							<option value="2000">2000</option>
@@ -45,13 +48,13 @@ class HuhtamakiCupprint{
   							<option value="4000">4000</option>
   							<option value="4500">4500</option>
   							<option value="5000">5000</option>
-  					</select>
-	  			</p>
-	  			<p>
-  					<label for="cpc12dwQuantity" id="CPC12DWLabel">12oz Double Wall:</label>
-	  				<select name="cpc12dwQuantity" id="cpc12dwQuantity" data-warning="<?php echo _('Please select at least one quantity');?>">
-  							<option value="0">how many 12 oz cups</option>
-  							<option value="500">500</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="cpc12dwQuantity" id="CPC12DWLabel">12oz Double Wall:</label>
+                        <select name="cpc12dwQuantity" id="cpc12dwQuantity" data-warning="<?php echo _('Please select at least one quantity');?>">
+                            <option value="0">how many 12 oz cups</option>
+                            <option value="500">500</option>
   							<option value="1000">1000</option>
   							<option value="1500">1500</option>
   							<option value="2000">2000</option>
@@ -61,12 +64,12 @@ class HuhtamakiCupprint{
   							<option value="4000">4000</option>
   							<option value="4500">4500</option>
   							<option value="5000">5000</option>
-  					</select>
-	  			</p>
-	  			<p id="calculate">
-  					<input type="submit" value="Calculate">
-	  				
-	  			</p>
+                        </select>
+                    </div>
+
+                    <div id="calculate" class="form-group">
+                        <input type="submit" value="Calculate">
+                    </div>
   				</form>
   				<div class="estimateResult"></div>
   				<div><?php echo $this->getMessageTemplateHtml('en','below-form-narrative.txt');?></div>
@@ -117,7 +120,7 @@ class HuhtamakiCupprint{
              ?>
             <div class="wrapEstimate" id="estimate">
  				<?php $this->renderEstimateTable($result); ?>
-            		<div><button type="button" id="sendRequest" data-reference="<?php echo($result['quoteReference'])?>" data-key="<?php  echo KEY_SAVE_ESTIMATE?>"><?php echo _('send request');?></button></div>
+                <div class="form-group"><button type="button" id="sendRequest" class="submit" data-reference="<?php echo($result['quoteReference'])?>" data-key="<?php  echo KEY_SAVE_ESTIMATE?>"><?php echo _('send request');?></button></div>
             </div>
             
             
@@ -139,53 +142,37 @@ class HuhtamakiCupprint{
         
         $subTotalPriceHeader=_('Price');
         $subTotalShippingHeader=_('Shipping');
-        $subTotalHeader=_('Total');
+        $subTotalHeader=_('Estimate');
         ?>
-                   	<table>
-            		<tr>
-            			<th class="estimateItemName"><?php echo($nameRowHeader);?></th>
-            			<th class="estimateItemQuantity"><?php echo($quantityRowHeader);?></th>
-            			<th class="estimateItemPrice"><?php echo($priceRowHeader);?></th>
-            			<th class="estimateItemFreight"><?php echo($freightRowHeader);?></th>
-            			<th class="estimateItemTotal"><?php echo($subtotalRowHeader);?></th>
-            			
-            		</tr>
-            		<tr>
-            			<td><?php  echo($cpc8dwName); ?></td>
-            			<td><?php  echo($result['cpc8dwQuantity']); ?></td>
-            			<td><?php  echo($result['cpc8dwPrice']); ?></td>
-            			<td><?php  echo($result['cpc8dwFreight']); ?></td>
-            			<td><?php  echo($result['cpc8dwTotal']); ?></td>
-            		</tr>
-            		<tr>
-            			<td><?php  echo($cpc12dwName); ?></td>
-            			<td><?php  echo($result['cpc12dwQuantity']); ?></td>
-            			<td><?php  echo($result['cpc12dwPrice']); ?></td>
-            			<td><?php  echo($result['cpc12dwFreight']); ?></td>
-            			<td><?php  echo($result['cpc12dwTotal']); ?></td>
-            		</tr>
-            		<tr>
-            			<td colspan="5">
-            			<table>
-            					<tr>
-            						<th><?php echo($subTotalPriceHeader);?></th>
-            						<td><?php  echo($result['estimatedPrice']); ?></td>
-            					</tr>
-            					<tr>
-            						<th><?php echo($subTotalShippingHeader);?></th>
-            						<td><?php  echo($result['estimatedFreight']); ?></td>
-            					</tr>
-            					<tr>
-            						<th><?php echo($subTotalHeader);?></th>
-            						<td><?php  echo($result['estimatedTotal']); ?></td>
-            					</tr>
-            					
-            				</table>
-              			</td>
-            			
-            		</tr>
-            		
-            	</table>
+            <table cellspacing="0" cellpadding="0" class="textright">
+                <tr>
+                    <th class="estimateItemName textleft"><?php echo($nameRowHeader);?></th>
+                    <th class="estimateItemQuantity"><?php echo($quantityRowHeader);?></th>
+                    <th class="estimateItemTotal"><?php echo($subtotalRowHeader);?></th>
+                </tr>
+                <tr>
+                    <td class="textleft"><?php  echo($cpc8dwName); ?></td>
+                    <td><?php  echo($result['cpc8dwQuantity']); ?></td>
+                    <td><?php  echo number_format($result['cpc8dwTotal'],2); ?></td>
+                </tr>
+                <tr>
+                    <td class="textleft"><?php echo($cpc12dwName); ?></td>
+                    <td><?php  echo($result['cpc12dwQuantity']); ?></td>
+                    <td><?php  echo number_format($result['cpc12dwTotal'],2); ?></td>
+                </tr>
+                <tr>
+                    <td class="priceblockspacer">&nbsp;</td>
+                    <td colspan="4" class="priceblock textright">
+                        <table cellspacing="0" cellpadding="0">
+                            <tr>
+                                <th><?php echo($subTotalHeader);?></th>
+                                <td>&euro; <?php  echo number_format($result['estimatedTotal'],2); ?></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                
+            </table>
         <?php 
     }
     

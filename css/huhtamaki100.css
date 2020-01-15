@@ -1,28 +1,81 @@
+html, body, td, p, a, h1, h2, h3, h4, h5 {
+	font-family: Lato,Arial,Helvetica,sans-serif;
+}
+html, body, td, p, a {
+	font-size: 15px;
+}
+
+footer{
+    min-height: 32px;
+    margin-top: 60px;
+	background: #ecf0f5;
+}
+
+.textright{
+	text-align: right;
+}
+.textleft{
+	text-align: left;
+}
+
+
+th, td {
+	padding-left: 10px;
+}
+td {
+	padding-top: 6px;
+	padding-bottom: 6px;
+}
+th:first-child,
+td:first-child {
+	padding-left: 0;
+}
+
 .row{
+	box-sizing: border-box;
 	display:block;
-	width:98%;
+	width:100%;
+	padding-left: 3%;
+	padding-right: 3%;
 }
 .masthead{
 	display:block;
-	height: 160px;
+	height: 38px;
+	padding-left: 2%;
+	padding-right: 2%;
+    margin: 3% 0 2%;
 }
 .topbar{
 	display:block;
-	height:24px;
+	padding: 7px 2% 8px;
 	background-color: #ec0085;
-	color:#ffffff;
+	color:#fff;
+	font-weight: 600;
+	font-size: 90%;
+}
+.topbar a,
+.topbar a:link{
+	color: #fff;
+	font-size: 90%;
 }
 .lhscolumn{
+	box-sizing: border-box;
 	width:60%;
 	float:left;
 	
 	height:100%;
+	padding-left: 2%;
+	padding-right: 2%;
 }
 .rhscolumn{
+	box-sizing: border-box;
 	width:40%;
 	float:right;
+	padding-left: 2%;
+	padding-right: 2%;
 }
 /* Clear floats after the columns */
+form:after ,
 .row:after {
   content: "";
   display: table;
@@ -35,11 +88,80 @@
 
 .wrapDesignCanvas{
 	display:block;
-	width: 500px;
-	height: 600px;
+	position: relative;
+	width: 100%;
+	height: 1;
+	height: 0;
+	padding-top: 120%;
 	background: transparent !important;
 	margin: 0 auto;
 	overflow: hidden; /** not sure if we need this */ 
+}
+
+.wrapDesignCanvas canvas{
+	position: absolute;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	right: 0;
+}
+
+/** Form */	
+.form-group{
+	box-sizing: border-box;
+	float: left;
+	position: relative;
+	width: 100%;
+	padding-left: 260px;
+	margin: 1% 0;
+	font-size: 110%;
+}
+.form-group:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.form-group label{
+	position: absolute;
+	top:13px;
+	left:0;
+	width: 240px;
+	float: left;
+	display: block;
+}
+.form-group input,
+.form-group select{
+	border: 1px solid #c0c0c0;
+	width: 100%;
+	padding: 12px 3%;
+}
+.form-group input{
+	width: 94%;
+}
+.form-group select{
+	width: 100%;
+}
+.form-group .submit ,
+.form-group input[type=submit] {
+	float: right;
+	width: 50%;
+}
+
+#formWarnings {
+	
+}
+#formWarnings ul {
+	background: #fffde8;
+	border: 2px solid #ffe600;
+	padding-top: 6px;
+	padding-bottom: 6px;
+}
+
+/** pricebox */	
+.priceblock table{
+	width: 100%;
+	border-top: 1px solid #000;
 }
 
 /** 3d rendering area */	
@@ -74,9 +196,11 @@
 
 }
 .wrapEstimate button{
+	width: 100%;
 	background-color: #357CFF;
+    padding: 12px 3%;
+    border: 1px solid #3336ff;
 	color:#ffffff;
-	padding: 4px;
 }
 
 .wrapMenu{

@@ -49,30 +49,43 @@ function renderHome($target){
 function processRequestForm(){
 	
 	// check that form has been completed, localized warnings are in target element data-warning attribute
+	var bReturn = true;
+
+	var warrnings = [];
+
 		// email address
 		if( !$('#emailAddress').val() ) {
-			showWarning($('#emailAddress'));
-			return false;
+			warrnings.push( showWarning($('#emailAddress')) );
+			// return false;
 		}
 		if (!isEmail($('#emailAddress').val())){
-			showWarning($('#emailAddress'));
-			return false;
+			warrnings.push( showWarning($('#emailAddress')) );
+			// return false;
 		}
 		// business unit
 		if( !$('#businessUnitID').val() ) {
-			showWarning($('#businessUnitID'));
-			return false;
+			warrnings.push( showWarning($('#businessUnitID')) );
+			// return false;
 		}
 		// at least one selection 8oz / 12oz
 		if (( !$('#cpc8dwQuantity').val()  ) && ( !$('#cpc12dwQuantity').val())){
-			showWarning($('#cpc8dwQuantity'));
-			return false;
+			warrnings.push( showWarning($('#cpc8dwQuantity')) );
+			// return false;
 		}
 		if (( $('#cpc8dwQuantity').val()=='0' ) && ($('#cpc12dwQuantity').val()=='0')){
-			showWarning($('#cpc8dwQuantity'));
-			return false;
+			warrnings.push( showWarning($('#cpc8dwQuantity')) );
+			// return false;
 		}
 		
+		if( warrnings.length ) {
+			$('#formWarnings').html( '<ul><li>' + warrnings.join('</li><li>') + '</li></ul>' );
+			
+			return false;
+		}
+		else {
+			$('#formWarnings').html( '' );
+		}
+
 	// all ok so post form
 		$url='backend/index.php';
 		console.log($('#requestForm').serialize());
@@ -104,6 +117,11 @@ function renderEstimate($estimate){
 		console.log($result);
 		
 		$('.estimateResult').html($result);
+		
+		$([document.documentElement, document.body]).animate({
+			scrollTop: $(".estimateResult").offset().top
+		}, 2000);
+
 		// bind to the button click 'send request'
 		$('#sendRequest').click(function(event){
 			event.preventDefault();
@@ -132,6 +150,7 @@ function saveEstimate(){
 function showWarning($cause){
 	$message=$cause.data('warning');
 	
+	return $message;
 }
 
 function isEmail(email) {

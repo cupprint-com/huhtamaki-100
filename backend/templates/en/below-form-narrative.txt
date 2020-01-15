@@ -5,3 +5,4 @@
 <li>Alternative Coatings (Recyclable & Compostable) & PEFC Accreditation</li>
 </ul>
 
+<p>For any queries please contact us via <a href="mailto:support@cupprint.com">support@cupprint.com</a></p>
