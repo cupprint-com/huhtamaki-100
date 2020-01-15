@@ -26,9 +26,9 @@ class HuhtamakiCupprint{
                         <input type="email" name="emailAddress" id="emailAddress" data-warning="<?php echo _('Please enter a valid email address');?>"/>
                     </div>
                     <div class="form-group">
-                        <label for="businessUnitID" id="businessUnitLabel">Business unit:</label>
+                        <label for="businessUnitID" id="businessUnitLabel"><?php echo _('Business Unit');?>:</label>
                         <select name="businessUnitID" id="businessUnitID" data-warning="<?php echo _('Please select your business unit');?>">
-                                <option value="">please select your business unit</option>
+                                <option value="">Please select your business unit</option>
                                 <?php $this->renderBusinessUnitOptions();?>
                                 
                                 
@@ -37,7 +37,7 @@ class HuhtamakiCupprint{
                     <div class="form-group">
                         <label for="cpc8dwQuantity" id="CPC8DWLabel">8oz Double Wall:</label>
                         <select name="cpc8dwQuantity" id="cpc8dwQuantity" data-warning="<?php echo _('Please select at least one quantity');?>">
-                            <option value="0">how many 8 oz cups</option>
+                            <option value="0">How many 8 oz cups</option>
                             <option value="500">500</option>
   							<option value="1000">1000</option>
   							<option value="1500">1500</option>
@@ -53,7 +53,7 @@ class HuhtamakiCupprint{
                     <div class="form-group">
                         <label for="cpc12dwQuantity" id="CPC12DWLabel">12oz Double Wall:</label>
                         <select name="cpc12dwQuantity" id="cpc12dwQuantity" data-warning="<?php echo _('Please select at least one quantity');?>">
-                            <option value="0">how many 12 oz cups</option>
+                            <option value="0">How many 12 oz cups</option>
                             <option value="500">500</option>
   							<option value="1000">1000</option>
   							<option value="1500">1500</option>
@@ -125,8 +125,6 @@ class HuhtamakiCupprint{
             
             
             <?php 
-        
-        
         }
         
     }
@@ -144,6 +142,7 @@ class HuhtamakiCupprint{
         $subTotalShippingHeader=_('Shipping');
         $subTotalHeader=_('Estimate');
         ?>
+            <h2><?php echo _("Your Request:"); ?></h2>
             <table cellspacing="0" cellpadding="0" class="textright">
                 <tr>
                     <th class="estimateItemName textleft"><?php echo($nameRowHeader);?></th>
@@ -166,13 +165,14 @@ class HuhtamakiCupprint{
                         <table cellspacing="0" cellpadding="0">
                             <tr>
                                 <th><?php echo($subTotalHeader);?></th>
-                                <td>&euro; <?php  echo number_format($result['estimatedTotal'],2); ?></td>
+                                <td><b>&euro; <?php  echo number_format($result['estimatedTotal'],2); ?></b></td>
                             </tr>
                         </table>
                     </td>
                 </tr>
                 
             </table>
+            <p>&nbsp;</p>
         <?php 
     }
     
@@ -183,16 +183,17 @@ class HuhtamakiCupprint{
             $estimate=new Estimate();
             $result=$estimate->save($_REQUEST['reference']);
             ?>
-           <!-- thank you page -->
-  			<h1><?php _('Thank you for Your Request!');?></h1>
-  			<div><?php echo $this->getMessageTemplateHtml('en','thank-you-page.txt');?></div>
-  			<div>
-  				<?php $this->renderEstimateTable($result); ?>
-  				<?php $this->renderContactDetails($result); ?>
-  			</div>
-  			<div><?php echo $this->getMessageTemplateHtml('en','thank-you-bottom.txt');?></div>
- 
-            
+            <!-- thank you page -->
+            <div class="thank-you-page">
+                <h1><?php echo _('Thank you for Your Request!');?></h1>
+                <div><?php echo $this->getMessageTemplateHtml('en','thank-you-page.txt');?></div>
+                <div>
+                    <?php $this->renderEstimateTable($result); ?>
+                    <?php $this->renderContactDetails($result); ?>
+                </div>
+                <div><?php echo $this->getMessageTemplateHtml('en','thank-you-bottom.txt');?></div>
+            </div>
+            <input type="hidden" id="sendRequest" class="submit" data-reference="<?php echo($_REQUEST['reference'])?>" data-key="<?php echo KEY_SAVE_ESTIMATE; ?>"></button>
             <?php 
             
             

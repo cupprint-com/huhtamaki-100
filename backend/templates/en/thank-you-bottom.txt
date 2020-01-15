@@ -1,1 +1,30 @@
-CupPrint specialise in short run, fast turnaround, customised paper cup printing. <br/><br/>A service that was previously only available to large volume buyers. Headquartered at their primary manufacturing operation in Ireland, CupPrint also have a production facility in The United States and a sales office in Germany and employ over 180 people. The CupPrint range includes the first and only cup that's designed to be recycled in regular waste processing plants. In 2018 this product was awarded 'Triple A' certification by the Institute cyclos-HTP in conjunction with the European Green Dot scheme. CupPrints offering allows smaller businesses, such as those with limited storage space, to present their brand on bespoke paper cups and to demonstrate their commitment to sustainable values via their alternative coatings range and PEFC accreditation. Short-run customised cups are also attractive to event organisers, for in-house brand use or promotional merchandise resellers.
+<p><em>Follow Us on Social</em></p>
+<div class="social-links">
+    <div class="fusion-social-networks-wrapper">
+        <a class="instagraminstagram" aria-label="fusion-instagram" target="_blank" href="https://www.instagram.com/cupprint/"><img src="img/01.gif" alt="instagram"></a>
+        &nbsp;
+        <a class="facebookfacebook" aria-label="fusion-facebook" target="_blank" href="https://www.facebook.com/CupPrint-UK-Ireland-1978152605844755/"><img src="img/02.gif" alt="facebook"></a>
+        &nbsp;
+        <a class="twittertwitter" aria-label="fusion-twitter" target="_blank" href="https://twitter.com/CupPrintUKIE"><img src="img/03.gif" alt="Twitter"></a>
+        &nbsp;
+        <a class="linkedinlinkedin" aria-label="fusion-linkedin" target="_blank" href="https://www.linkedin.com/company/10155367/admin/"><img src="img/04.gif" alt="LinkedIn"></a>
+        &nbsp;
+        <a class="youtubeyoutube" aria-label="fusion-youtube" target="_blank" href="https://www.youtube.com/channel/UC0SDhwnSe0MyW60ImdLhzLg"><img src="img/05.gif" alt="YouTube"></a>
+        &nbsp;
+        <a class="pinterestpinterest" aria-label="fusion-pinterest" target="_blank" href="https://www.pinterest.ie/cupprintusa/"><img src="img/06.gif" alt="Pinterest"></a>
+    </div>
+</div>
+
+<ul>
+    <li><strong><a href="https://cupprint.com/gallery/">LOOK FOR DESIGN INSPIRATION</a></strong></li>
+    <li><strong><a href="https://cupprint.com/printed-paper-coffee-cup-printing-faqs/">FAQs</a></strong></li>
+    <li><strong><a href="https://cupprint.com/custom-printed-paper-coffee-cup-design-tips/">PAPER CUP DESIGN TIPS</a></strong></li>
+</ul>
+
+<h2>About CupPrint</h2>
+
+<p><i>CupPrint specialise in short run, fast turnaround, customised paper cup printing. A service that was previously only available to large volume buyers.</i></p>
+<p>Headquartered at their primary manufacturing operation in Ireland, CupPrint also have a production facility in The United States and a sales office in Germany and employ over 180 people.</p>
+<p>The CupPrint range includes the <b>first and only cup that's designed to be recycled in regular waste processing plants</b>. In 2018 this product was awarded '<b>Triple A</b>' certification by the Institute cyclos-HTP in conjunction with the European Green Dot scheme.</p>
+<p>CupPrint’s offering allows smaller businesses, such as those with limited storage space, to present their brand on bespoke paper cups and to demonstrate their commitment to sustainable values via their alternative coatings range and PEFC accreditation.</p>
+<p>Short-run customised cups are also attractive to event organisers, for in-house brand use or promotional merchandise resellers.</p>
