@@ -91,11 +91,22 @@ function renderDesignResult($,$address,$image,$scene,$target){
 				/** Active Camera Properties */
 				model.prototype.cameraProperties = function(){
 					// (x, y, z) https://doc.babylonjs.com/classes/2.5/vector3
+					var x=-22.50829158363229;
+					var y= 14.027938391782204;
+					var z= 4.591708251598788;
+					
+
 					var cameraVector=new BABYLON.Vector3(0, 3, 0);
+					//var cameraVector=new BABYLON.Vector3(x,y,z);
 					// args: (name, alpha, beta, radius, target, scene) https://doc.babylonjs.com/classes/2.5/arcrotatecamera
 					var arcCamera = new BABYLON.ArcRotateCamera("ArcRotateCamera", 10, 0, 100, cameraVector , this.scene);
 					// use default scene camera position
-				    arcCamera.setPosition(this.scene.activeCamera.position);
+				   // arcCamera.setPosition(this.scene.activeCamera.position);
+					this.scene.activeCamera.position.x=x;
+					this.scene.activeCamera.position.y=y;
+					this.scene.activeCamera.position.z=z;
+					//new BABYLON.Vector3(0, 0, 20)
+					arcCamera.setPosition(this.scene.activeCamera.position);
 				    arcCamera.lowerRadiusLimit = 13;
 				    arcCamera.attachControl(this.engine.getRenderingCanvas(),true);
 				    this.scene.activeCamera = arcCamera;	
@@ -244,8 +255,8 @@ function AnimateDesign(){
 	var light = scene.lights[scene.lights.length-1];
 	
 	// read target setup from settings, this is used to set the camera position 
-	var target_alpha=parseFloat(camera.alpha + 0.44);
-	var target_beta=parseFloat(camera.beta  - .45);
+	var target_alpha=parseFloat(camera.alpha);
+	var target_beta=parseFloat(camera.beta);
 	var target_radius=parseFloat(camera.radius );
 	var target_intensity=parseFloat(light.intensity);
 	var mid_intensity=target_intensity + .3;
@@ -255,7 +266,7 @@ function AnimateDesign(){
 	var targetPosition=new BABYLON.Vector3(target_alpha,target_beta,target_radius);
 	camera.setPosition(targetPosition);	
 	
-	var start_radius = parseFloat(camera.radius  - 4);
+	var start_radius = parseFloat(camera.radius  - 7);
 	var start_alpha = parseFloat(camera.alpha/20.5);
 	var start_beta=parseFloat(camera.beta);
 	
