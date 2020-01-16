@@ -44,5 +44,5 @@ define('KEY_CALCULATE_ESTIMATE','gzMSmqCmET7CYvxE');
 define('KEY_GET_ESTIMATE','cs3NGXzpmrrtGAE4');
 define('KEY_SAVE_ESTIMATE','wsGcTtTJXfckrK5C');
 
-define('CPC8DW_PRICE',0.6);
-define('CPC12DW_PRICE',0.8);
+define('CPC8DW_PRICE',0.06);
+define('CPC12DW_PRICE',0.07);
