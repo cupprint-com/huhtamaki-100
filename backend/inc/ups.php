@@ -98,7 +98,12 @@ class UPS{
         
     }
     
-    
+    /**
+     * Prepares the JSON body that is used to invoke the UPS api
+     * G:\Digital\automation\huhtamaki 100\ups\Developers Guide\Rating Package RESTful Developer Guide.pdf
+     * @param array $data
+     * @return string
+     */
     private function prepare($data=[]){
         $result=[];
         $rateRequest=[];
@@ -110,6 +115,11 @@ class UPS{
         
     }
     
+    /**
+     * Creates the 'shipment' elements used in request to UPS api
+     * @param array $data
+     * @return string[]
+     */
     private function buildShipmentElement($data=[]){
         $result=[];
         $result['ShipmentRatingOptions']=$this->shipmentRatingOptions($data);
@@ -136,7 +146,11 @@ class UPS{
         return $result;
         
     }
-    
+    /**
+     * Calculates the number of packages, dimensional weight & total weight
+     * @param array $data
+     * @return number[]
+     */
     private function calculateWeightsAndPackages($data=[]){
         $result=[];
         # calculate the 'weight' by working out how many 8oz packages are required and how many 12oz packages are required
