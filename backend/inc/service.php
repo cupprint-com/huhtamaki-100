@@ -5,6 +5,7 @@ if(!defined('CP_HUHTAMAKI_RUNNING')){
 
 require_once   getcwd() . '/config/includes.php';
 require_once   getcwd() . '/inc/estimate.php';
+require_once   getcwd() . '/inc/ups.php';
 class HuhtamakiCupprint{
     
     
@@ -140,7 +141,7 @@ class HuhtamakiCupprint{
         
         $subTotalPriceHeader=_('Price');
         $subTotalShippingHeader=_('Shipping');
-        $subTotalHeader=_('Estimate');
+        $subTotalHeader=_('Estimated Total');
         ?>
             <h2><?php echo _("Your Request:"); ?></h2>
             <table cellspacing="0" cellpadding="0" class="textright">
@@ -163,10 +164,30 @@ class HuhtamakiCupprint{
                     <td class="priceblockspacer">&nbsp;</td>
                     <td colspan="4" class="priceblock textright">
                         <table cellspacing="0" cellpadding="0">
+                            
+                            <?php 
+                            if ($result['estimatedPrice'] > 0){
+                            ?>
+                            <tr>
+                                <th><?php echo($subTotalPriceHeader);?></th>
+                                <td><?php  echo number_format($result['estimatedPrice'],2); ?></td>
+                            </tr>
+                            <tr>
+                                <th><?php echo($subTotalShippingHeader);?></th>
+                                <td><?php  echo number_format($result['estimatedFreight'],2); ?></td>
+                            </tr>
                             <tr>
                                 <th><?php echo($subTotalHeader);?></th>
                                 <td><b>&euro; <?php  echo number_format($result['estimatedTotal'],2); ?></b></td>
                             </tr>
+                            <?php 
+                            }
+                            else{?>
+                            <tr>
+                                <th><?php echo($subTotalHeader);?></th>
+                                <td><b>&euro; <?php  echo number_format($result['estimatedPrice'],2); ?></b></td>
+                            </tr>
+                            <?php }?>
                         </table>
                     </td>
                 </tr>
@@ -201,6 +222,21 @@ class HuhtamakiCupprint{
         
     }
     
+    public function testCalculateFreight(){
+       # $ref='0d1612cf56e3ef0b9cc79b30e4315e36';
+        $ref='a5b89edd22416aa8af5e09787705ed4c';
+        if (array_key_exists('reference', $_REQUEST)){
+            $ref=$_REQUEST['reference'];
+        }
+        $estimate=new Estimate();
+        $data=$estimate->get($ref);
+        #return $data;
+        $ups=new UPS();
+        $result=$ups->calculateFreight($data);
+        return $result;
+        
+    }
+    
     private function renderContactDetails($result){
         ?>
         <div class="wrapBuContact">
@@ -211,7 +247,7 @@ class HuhtamakiCupprint{
         		</tr>
         		<tr>
         			<th><?php echo _('Business Unit');?></th>
-        			<td><?php echo $result['businessUnitID'];?></td>
+        			<td><?php echo $result['location'];?></td>
         		</tr>
         		<tr>
         			<th><?php echo _('Email Address');?></th>
@@ -267,32 +303,41 @@ class HuhtamakiCupprint{
     private function validateFormSubmission($form=[]){
         $result=[];
         $result['errors']=1;
-        $result['message']='Something went wrong !';
+        $result['message']=_('Something went wrong !');
         $cpc8dwQuantity=0;
         $cpc12dwQuantity=0;
         # verify that email address posted
         if (!array_key_exists('emailAddress', $form)){
-            $result['message']='Please enter a valid email address';
+            $result['message']=_('Please enter a valid email address');
             return $result;
         }
         # verify the email address format
         
         # verify that email domain posted
-        if( array_key_exists('emailAddress', $form) 
-         && !preg_match("/@(cupprint\.com|huhtamaki\.com)$/i", "PHP ist die Web-Scripting-Sprache der Wahl.")) {
-            $result['message']='Please enter a valid email domain';
-            return $result;
+        # we allow only cupprint.com & huhtamakic.com addresses in production
+        if (!H100_DEBUG){
+                if( array_key_exists('emailAddress', $form) && !preg_match("/@(cupprint\.com|huhtamaki\.com)$/i", "PHP ist die Web-Scripting-Sprache der Wahl.")) {
+                    $result['message']=_('Please enter a valid email domain');
+                    return $result;
+                }
+        }
+        else{
+            #for dev simply check there's an email address
+            if(! array_key_exists('emailAddress', $form) ) {
+                $result['message']=_('Please enter a valid email domain');
+                return $result;
+            }
         }
         
         # business unit
         if (!array_key_exists('businessUnitID', $form)){
-            $result['message']='Please select your business unit';
+            $result['message']=_('Please select your business unit');
             return $result;
         }
         
         # 8ozdw / 12ozdw
         if ((!array_key_exists('cpc8dwQuantity', $form)) && (!array_key_exists('cpc12dwQuantity', $form))){
-            $result['message']='Please select at least one quantity';
+            $result['message']=_('Please select at least one quantity');
             return $result;
         }
         if (array_key_exists('cpc8dwQuantity', $form)){
@@ -327,6 +372,7 @@ class HuhtamakiCupprint{
         $result[KEY_CALCULATE_ESTIMATE]=CALCULATE_ESTIMATE;
         $result[KEY_GET_ESTIMATE]=GET_ESTIMATE;
         $result[KEY_SAVE_ESTIMATE]=SAVE_ESTIMATE;
+        $result[KEY_CALCULATE_FREIGHT]=CALCULATE_FREIGHT;
         return $result;
         
         

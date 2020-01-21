@@ -31,9 +31,8 @@ class Estimate{
         
         $estimatedPrice = $cpc8dwPrice + $cpc12dwPrice;
         $estimatedFreight = $cpc8dwFreight + $cpc12dwFreight;
-        $estimatedTotal = $cpc8dwTotal + $cpc12dwTotal;
-       
         
+       
         $result['cpc8dwPrice']=$cpc8dwPrice;
         $result['cpc8dwFreight']=$cpc8dwFreight;
         $result['cpc8dwTotal']=$cpc8dwTotal;
@@ -42,6 +41,10 @@ class Estimate{
         $result['cpc12dwFreight']=$cpc12dwFreight;
         $result['cpc12dwTotal']=$cpc12dwTotal;
         
+        
+        
+        
+        
         $result['estimatedPrice']=$estimatedPrice;
         $result['estimatedFreight']=$estimatedFreight;
         $result['estimatedTotal']=$estimatedTotal;
@@ -49,8 +52,26 @@ class Estimate{
         
         $result=$this->updateWipEstimate($result);
         
+        # invoke UPS api to calculate freight
+        $ups=new UPS();
         
-        
+        $freight=$ups->calculateFreight($result);
+        $message=print_r($freight,true);
+        error_log($message);
+        if ($freight['errors']==0){
+            $service=$freight['service'];
+            $estimatedFreight=round($service['price']);
+            #update the estimate
+            $estimatedTotal = $estimatedPrice + $estimatedFreight;
+            $result['estimatedPrice']=$estimatedPrice;
+            $result['estimatedFreight']=$estimatedFreight;
+            $result['estimatedTotal']=$estimatedTotal;
+            
+            $result=$this->updateWipEstimate($result);
+        }
+        else{
+            #TODO - more robust error handling here
+        }
         
         
         return $result;
@@ -181,7 +202,7 @@ class Estimate{
         $db=new Database();
         $conn=$db->getConnection();
         
-        $sql="select * from wipHuh100Quotes where quoteReference=:quoteReference ";
+        $sql="select * from vQuotationDetails where quoteReference=:quoteReference ";
         $stmt = $conn->prepare($sql);
         $stmt->bindValue(':quoteReference',$quoteReference,PDO::PARAM_STR);
         if ($stmt->execute()) {

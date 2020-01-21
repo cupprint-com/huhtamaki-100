@@ -56,6 +56,10 @@ switch ($operationToExecute){
         $service->renderThankYouPage();
         die();
         break;
+    case CALCULATE_FREIGHT: # test the calculation of freight for a specific wip estimate (hardcoded)
+        $result=$service->testCalculateFreight();
+        break;
+        
 }
 
 

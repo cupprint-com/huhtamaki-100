@@ -8,3 +8,4 @@ if(!defined('CP_HUHTAMAKI_RUNNING')){
 #require_once  getcwd() . '/PHPMailer/SMTP.php';
 require_once 'constants.php';
 require_once 'database.php';
+require_once  getcwd() . '/inc/ups.php';
