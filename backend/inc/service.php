@@ -315,19 +315,14 @@ class HuhtamakiCupprint{
         
         # verify that email domain posted
         # we allow only cupprint.com & huhtamakic.com addresses in production
+        /**
         if (!H100_DEBUG){
-                if( array_key_exists('emailAddress', $form) && !preg_match("/@(cupprint\.com|huhtamaki\.com)$/i", "PHP ist die Web-Scripting-Sprache der Wahl.")) {
+                if( !preg_match("/@(cupprint\.com|huhtamaki\.com)$/i", "PHP ist die Web-Scripting-Sprache der Wahl.")) {
                     $result['message']=_('Please enter a valid email domain');
                     return $result;
                 }
         }
-        else{
-            #for dev simply check there's an email address
-            if(! array_key_exists('emailAddress', $form) ) {
-                $result['message']=_('Please enter a valid email domain');
-                return $result;
-            }
-        }
+        **/
         
         # business unit
         if (!array_key_exists('businessUnitID', $form)){

@@ -35,7 +35,7 @@ class Estimate{
         
         $estimatedPrice = $cpc8dwPrice + $cpc12dwPrice;
         $estimatedFreight = $cpc8dwFreight + $cpc12dwFreight;
-        
+        $estimatedTotal=$estimatedPrice + $estimatedFreight;
        
         $result['cpc8dwPrice']=$cpc8dwPrice;
         $result['cpc8dwFreight']=$cpc8dwFreight;
