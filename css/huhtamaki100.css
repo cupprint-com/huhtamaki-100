@@ -263,6 +263,20 @@ form:after ,
 	color:#ffffff;
 }
 
+.wrapBuContact table{
+	width:98%;
+	text-align:left;
+}
+.wrapBuContact th{
+	width:50%;
+	vertical-align:top;
+}
+.wrapBuContact td{
+	width:50%;
+	text-align:right;
+	vertical-align:top;
+}
+
 .wrapMenu{
 	margin: 24px 4px;
 }

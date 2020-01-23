@@ -58,14 +58,11 @@ function processRequestForm(){
 			warrnings.push( showWarning($('#emailAddress')) );
 			// return false;
 		}
-		else if (!isEmail($('#emailAddress').val())){
+		if (!isEmail($('#emailAddress').val())){
 			warrnings.push( showWarning($('#emailAddress')) );
 			// return false;
 		}
-		else if (!$('#emailAddress').val().match(/@(cupprint\.com|huhtamaki\.com)$/g) ){
-			warrnings.push( showWarning($('#emailAddress')) );
-			// return false;
-		}
+		
 		// business unit
 		if( !$('#businessUnitID').val() ) {
 			warrnings.push( showWarning($('#businessUnitID')) );

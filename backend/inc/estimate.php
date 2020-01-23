@@ -8,8 +8,12 @@ require_once   getcwd() . '/config/includes.php';
 
 class Estimate{
     
-    
-    public function prepare($data){
+    /**
+     * prepares an estimate for database, calculates packages needed and freight charge
+     * @param array $data
+     * @return array populated with saved and calculated data
+     */
+    public function prepare($data=[]){
         $result=$data;
         
         
@@ -31,9 +35,8 @@ class Estimate{
         
         $estimatedPrice = $cpc8dwPrice + $cpc12dwPrice;
         $estimatedFreight = $cpc8dwFreight + $cpc12dwFreight;
-        $estimatedTotal = $cpc8dwTotal + $cpc12dwTotal;
+        $estimatedTotal=$estimatedPrice + $estimatedFreight;
        
-        
         $result['cpc8dwPrice']=$cpc8dwPrice;
         $result['cpc8dwFreight']=$cpc8dwFreight;
         $result['cpc8dwTotal']=$cpc8dwTotal;
@@ -42,6 +45,10 @@ class Estimate{
         $result['cpc12dwFreight']=$cpc12dwFreight;
         $result['cpc12dwTotal']=$cpc12dwTotal;
         
+        
+        
+        
+        
         $result['estimatedPrice']=$estimatedPrice;
         $result['estimatedFreight']=$estimatedFreight;
         $result['estimatedTotal']=$estimatedTotal;
@@ -49,19 +56,46 @@ class Estimate{
         
         $result=$this->updateWipEstimate($result);
         
+        # invoke UPS api to calculate freight
+        $ups=new UPS();
         
-        
+        $freight=$ups->calculateFreight($result);
+        $message=print_r($freight,true);
+        error_log($message);
+        if ($freight['errors']==0){
+            $service=$freight['service'];
+            $estimatedFreight=round($service['price']);
+            #update the estimate
+            $estimatedTotal = $estimatedPrice + $estimatedFreight;
+            $result['estimatedPrice']=$estimatedPrice;
+            $result['estimatedFreight']=$estimatedFreight;
+            $result['estimatedTotal']=$estimatedTotal;
+            
+            $result=$this->updateWipEstimate($result);
+        }
+        else{
+            #TODO - more robust error handling here
+        }
         
         
         return $result;
     }
-    
+    /**
+     * Retrieves a saved work-in-progress quotation
+     * @param unknown $reference
+     * @return array
+     */
     public function get($reference){
         $result=$this->getWipEstimate($reference);
         return $result;
     }
     
-    public function save($reference){
+    /**
+     * invokes stored procedure that uses the quote reference to transfer a work in progress estimate into our target table (monitored by zap)
+     * @param string $reference
+     * @return array
+     */
+    public function save($reference='000'){
         $db=new Database();
         $conn=$db->getConnection();
         
@@ -98,10 +132,10 @@ class Estimate{
     }
     /**
      * Performs an update to the wipHuh100Quotes record that stores current state of the options selected by end user
-     * @param unknown $data
+     * @param array $data
      * @return unknown
      */
-    private function updateWipEstimate($data){
+    private function updateWipEstimate($data=[]){
         $db=new Database();
         $conn=$db->getConnection();
         $quoteReference=bin2hex(openssl_random_pseudo_bytes(16));
@@ -132,13 +166,6 @@ class Estimate{
         $sql.= 'estimatedPrice=:estimatedPrice,' ;
         $sql.= 'estimatedFreight=:estimatedFreight,' ;
         $sql.= 'estimatedTotal=:estimatedTotal ' ;
-        /*
-        $sql+= ',address1=:address1' ;
-        $sql+= ',address2=:address2' ;
-        $sql+= ',address3=:address3' ;
-        $sql+= ',zip=:zip' ;
-        $sql+= ',country=:country ' ;
-        */
         
         $sql.=' WHERE quoteReference=:quoteReference ';
         
@@ -177,11 +204,16 @@ class Estimate{
         return $this->getWipEstimate($data['quoteReference']);
     }
     
+    /**
+     * Retrieves a saved estimate from the wip folder, note that this function uses a view created to ensure that all fields needed for rendering are available
+     * @param string $quoteReference
+     * @return array
+     */
     private function getWipEstimate($quoteReference='000'){
         $db=new Database();
         $conn=$db->getConnection();
         
-        $sql="select * from wipHuh100Quotes where quoteReference=:quoteReference ";
+        $sql="select * from vQuotationDetails where quoteReference=:quoteReference ";
         $stmt = $conn->prepare($sql);
         $stmt->bindValue(':quoteReference',$quoteReference,PDO::PARAM_STR);
         if ($stmt->execute()) {
