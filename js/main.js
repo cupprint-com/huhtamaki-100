@@ -79,12 +79,8 @@ function processRequestForm(){
 		}
 		
 		if( warrnings.length ) {
-			$('#formWarnings').html( '<ul><li>' + warrnings.join('</li><li>') + '</li></ul>' );
-			
+			renderFormWarnings( warrnings );
 			return false;
-		}
-		else {
-			$('#formWarnings').html( '' );
 		}
 
 	// all ok so post form
@@ -93,7 +89,11 @@ function processRequestForm(){
 		$.post( $url, $('#requestForm').serialize(), function(data) {
 			console.log(data);
 			if (data['errors']===0){
+				removeFormWarnings();
 				renderEstimate(data);
+			}
+			else {
+				renderFormWarnings([data['message']]);
 			}
 			
 		}, 'json');
@@ -163,3 +163,11 @@ function isEmail(email) {
 	  var regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 	  return regex.test(email);
 	}
+
+
+function renderFormWarnings($warrnings){
+	$('#formWarnings').html( '<ul><li>' + $warrnings.join('</li><li>') + '</li></ul>' );
+}
+function removeFormWarnings(){
+	$('#formWarnings').html( '' );
+}
