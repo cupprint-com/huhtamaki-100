@@ -306,24 +306,21 @@ class HuhtamakiCupprint{
         $result['message']=_('Something went wrong !');
         $cpc8dwQuantity=0;
         $cpc12dwQuantity=0;
+
         # verify that email address posted
         if (!array_key_exists('emailAddress', $form)){
             $result['message']=_('Please enter a valid email address');
             return $result;
         }
-        # verify the email address format
-        
-        # verify that email domain posted
-        # we allow only cupprint.com & huhtamakic.com addresses in production
-        /**
-        if (!H100_DEBUG){
-                if( !preg_match("/@(cupprint\.com|huhtamaki\.com)$/i", "PHP ist die Web-Scripting-Sprache der Wahl.")) {
-                    $result['message']=_('Please enter a valid email domain');
-                    return $result;
-                }
+        else if (!H100_DEBUG) {
+            # verify that email domain posted
+            # we allow only cupprint.com & huhtamakic.com addresses in production
+            if (!preg_match('/@(cupprint\.com|huhtamaki\.com)$/i', $form['emailAddress'])){
+                $result['message']=_('Please enter a valid email address');
+                return $result;
+            }
         }
-        **/
-        
+
         # business unit
         if (!array_key_exists('businessUnitID', $form)){
             $result['message']=_('Please select your business unit');
