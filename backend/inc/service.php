@@ -166,7 +166,7 @@ class HuhtamakiCupprint{
                         <table cellspacing="0" cellpadding="0">
                             
                             <?php 
-                            if ($result['estimatedPrice'] > 0){
+                            if ($result['estimatedFreight'] > 0){
                             ?>
                             <tr>
                                 <th><?php echo($subTotalPriceHeader);?></th>
