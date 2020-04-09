@@ -14,6 +14,8 @@ $debugging=0;
 
 if (file_exists($filename)){
     $localDatabaseName='automation_development';
+    $localDatabaseUser='automation_development';
+    $localDatabasePassword='fzb7TMSZkSUcKXAs';
     $debugging=1;
 }
 
