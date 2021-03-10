@@ -40,7 +40,7 @@ define('UPS_CUPPRINT_STATE','');
 define('UPS_CUPPRINT_ZIP','V95 NN60');
 define('UPS_CUPPRINT_COUNTRY','IE');
 # MARKUP to be applied to freight cost
-define('UPS_FREIGHT_MARKUP',1.15); #15% markup
+define('UPS_FREIGHT_MARKUP',1); #15% markup
 
 
 define('CPC8DW_WEIGHT',15.5);
